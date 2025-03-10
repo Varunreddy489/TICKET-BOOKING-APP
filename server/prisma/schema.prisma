@@ -1,0 +1,78 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql" // or mysql, sqlite depending on your preference
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  clerkId   String   @unique
+  role      Role     @default(USER)
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+
+  tickets Ticket[] // Relationship to Ticket model
+  reviews Review[] // Relationship to Review model
+}
+
+model Movie {
+  id                Int      @id @default(autoincrement())
+  name              String // Default name
+  description       String
+  rating            Float    @default(0.0)
+  images            String[] // Array of image URLs
+  ticketCost        Float    @default(0) // Default ticket cost
+  timings           String[] // Array of show timings
+  languages         String[] // Array of languages
+  genres            String[] // Array of genres
+  isMovieAvailable  Boolean  @default(true)
+  movieSeatCapacity Int      @default(100) // Default seat capacity
+  tickets           Ticket[] // Relationship to Ticket model
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  Review            Review[]
+
+  @@index([isMovieAvailable])
+}
+
+model Ticket {
+  id         Int     @id @default(autoincrement())
+  count      Int
+  cost       Float
+  timing     String
+  seatNumber String[]
+  isExpired  Boolean @default(false)
+
+  movie   Movie @relation(fields: [movieId], references: [id])
+  movieId Int
+
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String? // Foreign key for the user who booked the ticket
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Review {
+  id      Int    @id @default(autoincrement())
+  content String
+  rating  Float  @default(0.0)
+
+  movie   Movie @relation(fields: [movieId], references: [id])
+  movieId Int
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String // Foreign key for the user who wrote the review
+
+  createdAt DateTime @default(now())
+}

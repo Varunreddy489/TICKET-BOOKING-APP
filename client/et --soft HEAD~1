@@ -1,0 +1,129 @@
+[33mcommit 065b6a31ef2df8ca8524c376370a3a540871f08c[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Merge: 2b9f1d8 aaf5f45
+Author: Varunreddy <varunsannapureddy@gmail.com>
+Date:   Thu Mar 6 18:05:49 2025 +0530
+
+    Merge branch 'main' of https://github.com/Varunreddy489/movie_ticket_booking
+
+[33mcommit 2b9f1d8db3bc287825c32743e6b08e6981478461[m
+Author: Varunreddy <varunsannapureddy@gmail.com>
+Date:   Thu Mar 6 18:04:48 2025 +0530
+
+    Initial commit
+
+[33mcommit aaf5f454fbf9bb635681e538adb46c01f76772e3[m
+Author: Varunreddy <varunsannapureddy@gmail.com>
+Date:   Wed Mar 5 20:50:50 2025 +0530
+
+    Implement authentication routes and middleware; add auth controller for user management
+
+[33mcommit c546fdc5afa59a4de9332afffd67cce7bad194cd[m
+Author: Varunreddy <varunsannapureddy@gmail.com>
+Date:   Wed Mar 5 16:37:01 2025 +0530
+
+    Refactor User and Movie models; add Ticket and Review models with relationships
+
+[33mcommit 9ebf309077292618b1a3a384843c8177ae0d0c4d[m
+Author: Varunreddy <varunsannapureddy@gmail.com>
+Date:   Wed Mar 5 13:04:01 2025 +0530
+
+    Add Movie model and Showtime repository for managing showtimes
+
+[33mcommit 458cf413501d30ff39589a02d2b3a62a72eb1903[m
+Author: Varunreddy <varunsannapureddy@gmail.com>
+Date:   Wed Mar 5 13:00:42 2025 +0530
+
+    Update User model to change id type to String and add clerkId; modify reservations and showtime models accordingly
+
+[33mcommit 456c0eef3578358a10e3eb3e345e9fe07ababfa6[m
+Author: Varunreddy <varunsannapureddy@gmail.com>
+Date:   Wed Mar 5 12:52:16 2025 +0530
+
+    Add reservations model and update showtimes schema to establish relationship
+
+[33mcommit a10b479beb2dbdb1878197cd6a67b12cff817ab7[m
+Author: Varunreddy <varunsannapureddy@gmail.com>
+Date:   Wed Mar 5 12:48:40 2025 +0530
+
+    Add showtime model and update movie schema with genres and isShowing field
+
+[33mcommit 3742ba5248d1c60704c3236c3bbfce18534840f3[m
+Author: Varunreddy <varunsannapureddy@gmail.com>
+Date:   Wed Mar 5 10:42:43 2025 +0530
+
+    Update seed script path and add movie seed data for database initialization
+
+[33mcommit aba4fd4ec82f40c90f6cdfd01c3a8bf90726e7c1[m
+Author: Varunreddy <varunsannapureddy@gmail.com>
+Date:   Tue Mar 4 22:28:16 2025 +0530
+
+            modified:   server/package-lock.json
+            modified:   server/package.json
+            modified:   server/prisma/schema.prisma
+            modified:   server/src/config/index.ts
+
+[33mcommit 17e4a8700c2bd5dea889c4ba4dfa369a91b3b730[m
+Author: Varunreddy <varunsannapureddy@gmail.com>
+Date:   Tue Mar 4 22:24:48 2025 +0530
+
+    Implement movie management functionality with controllers, services, repositories, routes, and validations
+
+[33mcommit f2b9808bf83d52d0910c52192bd1f13b3dbf8dc5[m
+Author: Varunreddy <varunsannapureddy@gmail.com>
+Date:   Tue Mar 4 22:23:49 2025 +0530
+
+    Refactor CrudRepository to use generics for model type and simplify method implementations
+
+[33mcommit a289cd996e8e622e4824b80edf6569a63350b8f4[m
+Author: Varunreddy <varunsannapureddy@gmail.com>
+Date:   Tue Mar 4 22:22:23 2025 +0530
+
+    Add seed script and movie data for database initialization
+
+[33mcommit d8bf1bae15c9b5476e646d2f80263dc5c0efca19[m
+Author: Varunreddy <varunsannapureddy@gmail.com>
+Date:   Tue Mar 4 20:00:31 2025 +0530
+
+    Refactor response utility exports to use consistent naming conventions
+
+[33mcommit be31b62b151392d6c973ddca5941a393df9d1217[m
+Author: Varunreddy <varunsannapureddy@gmail.com>
+Date:   Tue Mar 4 19:58:15 2025 +0530
+
+    Add CORS support and configure middleware in server setup
+
+[33mcommit 2a8ff0062f4da03009b26c84d7266331b5957ecc[m
+Author: Varunreddy <varunsannapureddy@gmail.com>
+Date:   Tue Mar 4 17:09:52 2025 +0530
+
+    Add genre and image fields to Movie schema and update migration
+
+[33mcommit 561c382068de2c275233ab4b8e036e5cd16b28c2[m
+Author: Varunreddy <varunsannapureddy@gmail.com>
+Date:   Tue Mar 4 16:44:21 2025 +0530
+
+    Add migration for Movie schema with title, description, and rating fields
+
+[33mcommit 06e9a6187a88dbb4ccb35f02059125f1daa28754[m
+Author: Varunreddy <varunsannapureddy@gmail.com>
+Date:   Tue Mar 4 16:43:59 2025 +0530
+
+    Refactor CrudRepository to use PrismaClient and improve error handling
+
+[33mcommit a7a4aa7b18dc04af91a2070f40d8f684b729413e[m
+Author: Varunreddy <varunsannapureddy@gmail.com>
+Date:   Tue Mar 4 16:43:48 2025 +0530
+
+    Add user schema and movie model to the database
+
+[33mcommit c58365939959ad81b40bc5e96624d28ead6ff0b8[m
+Author: Varunreddy <varunsannapureddy@gmail.com>
+Date:   Tue Mar 4 15:34:43 2025 +0530
+
+    Update .gitignore and package.json for build and development improvements
+
+[33mcommit abed9c21ce61f722e224c8e920fe0dff8480e097[m
+Author: Varunreddy <varunsannapureddy@gmail.com>
+Date:   Tue Mar 4 15:31:10 2025 +0530
+
+    first commit
