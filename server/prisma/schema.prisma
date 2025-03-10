@@ -51,7 +51,7 @@ model Ticket {
   cost       Float
   timing     String
   seatNumber String[]
-  totalCost  String
+  totalCost  Float
   isExpired  Boolean  @default(false)
 
   movie   Movie @relation(fields: [movieId], references: [id])
