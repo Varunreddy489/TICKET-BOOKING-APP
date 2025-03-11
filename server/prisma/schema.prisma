@@ -31,7 +31,7 @@ model Movie {
   description       String
   rating            Float    @default(0.0)
   images            String[] // Array of image URLs
-  ticketCost        Float    @default(0) // Default ticket cost
+  ticketCost        Float    @default(10) // Default ticket cost
   timings           String[] // Array of show timings
   languages         String[] // Array of languages
   genres            String[] // Array of genres
