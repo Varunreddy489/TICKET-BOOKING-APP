@@ -17,7 +17,7 @@ const AuthCallbackPage = () => {
       try {
         syncAttempted.current = true;
 
-        await axiosInstance.post("/auth/callback", {
+        await axiosInstance.post("/auth", {
           id: user.id,
           name: user.fullName || `${user.firstName} ${user.lastName}`.trim(),
           email: user.emailAddresses[0].emailAddress,
