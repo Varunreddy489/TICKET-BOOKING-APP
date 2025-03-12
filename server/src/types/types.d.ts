@@ -1,3 +1,5 @@
+import { AuthObject } from "@clerk/express";
+
 export type User = {
   id: number;
   name: string;
@@ -24,25 +26,16 @@ export type Movie = {
   reviews?: Review[];
 };
 
-export type Showtime = {
-  id?: number;
-  movieId?: number;
-  startTime?: Date;
-  endTime?: Date;
-  capacity?: number;
-  location?: string;
-  movie?: Movie;
-  createdAt?: Date;
-  updatedAt?: Date;
-};
-
 export type Ticket = {
   id?: number;
   count: number;
   cost: number;
-  userId: number;
-  showtime: Showtime;
-  movie: Movie;
+  totalCost?: number;
+  userId?: string | null;
+  timing: string;
+  seatNumber: string[];
+  movieId: number;
+  isExpired?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 };
@@ -52,6 +45,14 @@ export type Review = {
   content: string;
   rating: number;
   movieId: number;
-  userId: number;
+  userId?: string | null;
   createdAt?: Date;
 };
+
+declare global {
+  namespace Express {
+    interface Request {
+      auth?: AuthObject;
+    }
+  }
+}
