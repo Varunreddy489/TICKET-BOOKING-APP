@@ -1,9 +1,8 @@
-import { Loader } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card.tsx";
 import { useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import { axiosInstance } from "@/lib/axios";
+import Spinner from "@/components/Spinner";
 
 const AuthCallbackPage = () => {
   const { isLoaded, user } = useUser();
@@ -32,17 +31,7 @@ const AuthCallbackPage = () => {
     syncUser();
   }, [isLoaded, user, navigate]);
 
-  return (
-    <div className="h-screen w-full flex flex-col items-center justify-center">
-      <Card className="w-[90%] max-w-md bg-zinc-900 border-zinc-800">
-        <CardContent className="flex flex-col items-center gap-4 pt-6">
-          <Loader className="size-6 text-emerald-500 animate-spin" />
-          <h3 className="text-zinc-400 text-xl font-bold">Logging you in</h3>
-          <p className="text-zinc-400 text-sm">Redirecting...</p>
-        </CardContent>
-      </Card>
-    </div>
-  );
+  return <Spinner />;
 };
 
 export default AuthCallbackPage;
