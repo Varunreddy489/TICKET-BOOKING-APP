@@ -24,7 +24,7 @@ export type User = {
 
 export type Movie = {
   id: number;
-  title: string;
+  name: string;
   description: string;
   rating: number;
   images: string[];
