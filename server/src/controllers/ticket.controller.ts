@@ -1,8 +1,11 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
+import { prisma } from "../config";
 import { ErrorResponse, SuccessResponse } from "../utils/common";
-import { CreateTicket, GetTicketById, GetTickets } from "../services";
+import { BookTicket, GetTicketById, GetTickets } from "../services";
+import { Ticket } from "../types/types";
+import AppError from "../utils/errors/app.error";
 
 /**
  
@@ -16,25 +19,41 @@ import { CreateTicket, GetTicketById, GetTickets } from "../services";
   "ticketCost": 12.99,
   "timings": ["2025-03-05T09:00:00Z", "2025-03-05T14:00:00Z"],
   "languages": ["English", "French"],
-  "genres": ["Sci-Fi", "Thriller"],
   "isMovieAvailable": true,
   "movieSeatCapacity": 150
 }
 
  */
-export const CreateTicketController = async (req: Request, res: Response) => {
+
+// * /api/v1/tickets POST
+export const BookTicketsController = async (req: Request, res: Response) => {
   try {
-    const ticket = await CreateTicket(req.body);
-    SuccessResponse.data = ticket;
+    const { movieId } = req.params;
+    // const { userId } = req.auth || {};
+    const { count, userId, cost, timing, seatNumber } = req.body;
+
+    const ticketData: Ticket = {
+      count,
+      cost,
+      timing,
+      seatNumber,
+      movieId: Number(movieId),
+      userId: userId || null,
+    };
+
+    const response = await BookTicket(ticketData);
+
+    SuccessResponse.data = response;
     res.status(StatusCodes.CREATED).json(SuccessResponse);
-    return;
   } catch (error: any) {
-    ErrorResponse.error = error;
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(ErrorResponse);
-    return;
+    console.error(error);
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ message: error.message });
   }
 };
 
+// * /api/v1/tickets GET
 export const GetAllTicketsController = async (req: Request, res: Response) => {
   try {
     const tickets = await GetTickets();
@@ -48,6 +67,8 @@ export const GetAllTicketsController = async (req: Request, res: Response) => {
   }
 };
 
+// * /api/v1/tickets/:id GET
+
 export const GetTicketByIdController = async (req: Request, res: Response) => {
   try {
     const ticket = await GetTicketById(Number(req.params.id));
@@ -60,3 +81,4 @@ export const GetTicketByIdController = async (req: Request, res: Response) => {
     return;
   }
 };
+

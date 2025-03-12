@@ -1,19 +1,64 @@
 import { StatusCodes } from "http-status-codes";
 
+import { prisma } from "../config";
 import { Ticket } from "../types/types";
 import AppError from "../utils/errors/app.error";
 import TicketRepository from "../repositories/ticket.repository";
 
 const ticketRepository = new TicketRepository();
-export const CreateTicket = async (data: Ticket) => {
+
+// export type CreateTicketData = Omit<
+//   Ticket,
+//   "id" | "totalCost" | "createdAt" | "updatedAt"
+// >;
+
+export const BookTicket = async (data: Ticket) => {
   try {
-    const response = await ticketRepository.create(data);
-    return response;
-  } catch (error) {
-    throw new AppError(
-      "Cannot Create the Ticket",
-      StatusCodes.INTERNAL_SERVER_ERROR
-    );
+    const { count, cost, timing, seatNumber, movieId, userId } = data;
+
+    console.log("movieId:", movieId);
+
+    const numberMovie = Number(movieId);
+
+    if (isNaN(numberMovie) || numberMovie <= 0) {
+      throw new AppError(
+        "Invalid movieId. It must be a positive number.",
+        StatusCodes.BAD_REQUEST
+      );
+    }
+
+    if (seatNumber.length !== count) {
+      throw new AppError(
+        "Invalid seat number. Count does not match with Seat Numbers.",
+        StatusCodes.BAD_REQUEST
+      );
+    }
+
+    const isMovie = await prisma.movie.findUnique({
+      where: { id: numberMovie },
+    });
+
+    if (!isMovie) {
+      throw new AppError("Movie not found", StatusCodes.NOT_FOUND);
+    }
+
+    const totalCost = count * cost;
+
+    const ticket = await prisma.ticket.create({
+      data: {
+        count,
+        cost,
+        totalCost,
+        timing,
+        seatNumber,
+        movieId: numberMovie,
+        userId,
+      },
+    });
+
+    return ticket;
+  } catch (error: any) {
+    throw new AppError(error.message, StatusCodes.INTERNAL_SERVER_ERROR);
   }
 };
 
@@ -41,5 +86,12 @@ export const GetTickets = async () => {
   }
 };
 
-
-export const BookTickets = async (id: number, data: any) => {};
+export const BookTickets = async (id: number, data: any) => {
+  try {
+  } catch (error: any) {
+    throw new AppError(
+      "Cannot Book the Ticket",
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+};
