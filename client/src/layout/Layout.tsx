@@ -1,12 +1,14 @@
 import { Outlet } from "react-router-dom";
 import TopBar from "@/components/TopBar";
+import Footer from "@/components/Footer";
 
 const Layout = () => {
   return (
     <div className="min-h-screen flex bg-[#1F1B2B] ">
-      <main className="flex-grow">
+      <main className="flex-grow  ">
         <TopBar />
         <Outlet />
+        <Footer />
       </main>
     </div>
   );
