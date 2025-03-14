@@ -44,7 +44,7 @@ export type Ticket = {
   count: number;
   cost: number;
   totalCost?: number;
-  userId?: string | null;
+  userId?: string;
   timing: string;
   seatNumber: string[];
   movieId: number;
@@ -57,7 +57,7 @@ export type Review = {
   id?: number;
   content: string;
   rating: number;
-  movieId: number;
-  userId: number;
+  movieId?: number;
+  userId?: string;
   createdAt?: Date;
 };
