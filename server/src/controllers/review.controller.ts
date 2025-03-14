@@ -8,8 +8,7 @@ import { ErrorResponse, SuccessResponse } from "../utils/common";
 export const CreateReviewController = async (req: Request, res: Response) => {
   try {
     const { movieId } = req.params;
-    // const { userId } = req.auth || {};
-    const { rating, content,userId } = req.body;
+    const { rating, content, userId } = req.body;
 
     const reviewData: Review = {
       content,
@@ -25,7 +24,6 @@ export const CreateReviewController = async (req: Request, res: Response) => {
   } catch (error: any) {
     ErrorResponse.error = error;
     res.status(error.statusCode).json(ErrorResponse);
-    return;
   }
 };
 
@@ -39,6 +37,5 @@ export const GetAllReviewsController = async (req: Request, res: Response) => {
   } catch (error: any) {
     ErrorResponse.error = error;
     res.status(error.statusCode).json(ErrorResponse);
-    return;
   }
 };

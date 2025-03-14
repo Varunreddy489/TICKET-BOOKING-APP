@@ -1,12 +1,21 @@
 import Router from "express";
-import { authCallback, CreateReviewController, GetAllReviewsController } from "../../controllers";
+import {
+  CreateReviewController,
+  GetAllReviewsController,
+} from "../../controllers";
+import { protectedRoute } from "../../middleware";
+import { ReviewValidator } from "../../validations";
 
 const router = Router();
 
+// *  /api/v1/reviews/:movieId POST
+router.post(
+  "/:movieId",
+  ReviewValidator,
+  CreateReviewController
+);
+
 // *  /api/v1/reviews/:movieId GET
 router.get("/:movieId", GetAllReviewsController);
-
-// *  /api/v1/reviews/:movieId POST
-router.post("/:movieId", CreateReviewController);
 
 export { router as reviewRoutes };

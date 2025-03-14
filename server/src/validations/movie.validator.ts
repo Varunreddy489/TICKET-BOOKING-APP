@@ -1,11 +1,7 @@
 import { body } from "express-validator";
 
 export const MovieValidator = [
-  body("name")
-    .notEmpty()
-    .withMessage("Name is required")
-    .isString()
-    .withMessage("Name must be a string"),
+  body("name").notEmpty().withMessage("Name is required").isString(),
 
   body("description")
     .notEmpty()
@@ -22,13 +18,17 @@ export const MovieValidator = [
   body("images")
     .isArray({ min: 1 })
     .withMessage("Images must be an array with at least one URL")
-    .custom((value) => value.every((url: string) => /^https?:\/\/.+\..+/.test(url)))
+    .custom((value) =>
+      value.every((url: string) => /^https?:\/\/.+\..+/.test(url))
+    )
     .withMessage("Each image must be a valid URL"),
 
   body("genres")
     .isArray({ min: 1 })
     .withMessage("Genres must be an array with at least one genre")
-    .custom((value) => value.every((genre: string) => typeof genre === "string"))
+    .custom((value) =>
+      value.every((genre: string) => typeof genre === "string")
+    )
     .withMessage("Each genre must be a string"),
 
   body("timings")

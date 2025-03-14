@@ -8,6 +8,24 @@ import ReviewRepository from "../repositories/review.repository";
 const reviewRepository = new ReviewRepository();
 export const CreateReview = async (data: Review) => {
   try {
+    const userId = data.userId;
+
+    if (!userId) {
+      throw new AppError("User ID is required", StatusCodes.BAD_REQUEST);
+    }
+
+    const userExists = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!userExists) {
+      throw new AppError("User not found", StatusCodes.NOT_FOUND);
+    }
+
+    console.log("userId:", userExists);
+
     const review = await reviewRepository.create(data);
     return review;
   } catch (error: any) {
