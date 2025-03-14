@@ -4,7 +4,7 @@ export type User = {
   id: number;
   name: string;
   email: string;
-  clerkId: string;
+  clerkId?: string;
   role: string;
   genres: Genres[];
 };
