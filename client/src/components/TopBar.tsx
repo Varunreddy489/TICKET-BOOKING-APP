@@ -1,48 +1,152 @@
-import { cn } from "@/lib/utils";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { buttonVariants } from "./ui/button";
-import { SignedOut, UserButton } from "@clerk/clerk-react";
+import { SignedOut, UserButton, useUser } from "@clerk/clerk-react";
+import { Ticket, LayoutDashboard, Menu, X, Search } from "lucide-react";
+
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import SignInOAuthButtons from "./SignInOAuthButtons";
-import { LayoutDashboardIcon } from "lucide-react";
 
-const TopBar = () => {
+export default function TopBar() {
+  const { user } = useUser();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   return (
-    <div className="flex items-center w-full justify-between px-6 py-4 sticky top-0 bg-gray-700 bg-opacity-90 backdrop-blur-md z-20 shadow-md">
-      {/* Logo & Title */}
-      <div className="flex gap-3 items-center">
-        <img
-          src="/ticket.jpg"
-          className="size-10 rounded-full"
-          alt="QuickTickets logo"
-        />
-        <h2 className="text-3xl font-bold bg-gradient-to-r from-[#ff512f] to-[#dd2476] bg-clip-text text-transparent tracking-wide">
-          Quick<span className="text-yellow-300">Tickets</span>
-        </h2>
-      </div>
+    <header
+      className={cn(
+        "  transition-all duration-300 ease-in-out",
+        "backdrop-blur-md bg-black/70 border-b py-4 border-white/10"
+      )}
+    >
+      <div className="container mx-auto px-4">
+        <div className="flex items-center justify-between">
+          {/* Left Section - Logo & Title */}
+          <Link to="/home" className="flex items-center gap-2 group">
+            <div className="bg-gradient-to-br from-yellow-400 to-yellow-600 p-2 rounded-lg transition-transform group-hover:scale-110 duration-300">
+              <Ticket className="h-5 w-5 text-black" />
+            </div>
+            <div className="font-bold text-xl md:text-2xl">
+              <span className="text-white">Quick</span>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-yellow-600">
+                Tickets
+              </span>
+            </div>
+          </Link>
 
-      {/* Navigation Links */}
-      <div className="flex items-center gap-6">
-        <Link to={"/"} className={cn(buttonVariants({ variant: "link" }))}>
-          Booked Tickets
-        </Link>
-        <Link
-          to={"/admin"}
-          className={cn(buttonVariants({ variant: "outline" }))}
+          <div className="relative w-full max-w-md">
+            <input
+              type="search"
+              className="w-full bg-white border border-gray-300 rounded-lg px-4 py-2.5 pr-10 text-sm font-semibold text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-500"
+              placeholder="Search for movies"
+            />
+            <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+          </div>
+
+          {/* Center Section - Navigation (Desktop) */}
+          <nav className="flex items-center gap-6">
+            <Link
+              to="/tickets"
+              className="relative px-4 py-2 text-white font-medium transition-all duration-300 hover:text-yellow-400 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-yellow-400 after:transition-all hover:after:w-full"
+            >
+              Booked Tickets
+            </Link>
+            <Link to="/admin">
+              <Button
+                variant="outline"
+                className="border-yellow-500/50 bg-transparent text-white hover:bg-yellow-500/10 hover:text-yellow-400 transition-all duration-300"
+              >
+                <LayoutDashboard className="mr-2 h-4 w-4" />
+                Admin Dashboard
+              </Button>
+            </Link>
+          </nav>
+
+          <div className="flex items-center   gap-4">
+            <h2 className="text-xl font-medium text-white  ">
+              Welcome, {user?.firstName} {user?.lastName}!
+            </h2>
+            <SignedOut>
+              <SignInOAuthButtons />
+            </SignedOut>
+            <UserButton />
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            className="md:hidden flex items-center justify-center h-10 w-10 rounded-md bg-black/20 text-white hover:bg-black/40 transition-all"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            {isMobileMenuOpen ? (
+              <X className="h-5 w-5" />
+            ) : (
+              <Menu className="h-5 w-5" />
+            )}
+          </button>
+        </div>
+
+        {/* Mobile Menu */}
+        <div
+          className={cn(
+            "md:hidden overflow-hidden transition-all duration-300 ease-in-out",
+            isMobileMenuOpen ? "max-h-64 opacity-100 py-4" : "max-h-0 opacity-0"
+          )}
         >
-          <LayoutDashboardIcon className="size-5 mr-2" />
-          Admin Dashboard
-        </Link>
+          <nav className="flex flex-col gap-4">
+            <Link
+              to="/tickets"
+              className="px-4 py-2 text-white font-medium hover:bg-white/5 rounded-md transition-all"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Booked Tickets
+            </Link>
+            <Link
+              to="/admin"
+              className="px-4 py-2 text-white font-medium hover:bg-white/5 rounded-md transition-all flex items-center"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <LayoutDashboard className="mr-2 h-4 w-4" />
+              Admin Dashboard
+            </Link>
+          </nav>
+        </div>
       </div>
-
-      {/* Authentication Section */}
-      <div className="flex items-center text-black  gap-4">
-        <SignedOut>
-          <SignInOAuthButtons />
-        </SignedOut>
-        <UserButton />
-      </div>
-    </div>
+    </header>
   );
-};
+}
 
-export default TopBar;
+{
+  /* Right Section - Authentication */
+}
+{
+  /* <div className="hidden md:flex items-center gap-3">
+            {isSignedIn ? (
+              <div className="flex items-center gap-3">
+                <span className="text-white/80 text-sm">Hello, {userName}</span>
+                <Avatar className="h-9 w-9 ring-2 ring-yellow-500/50 transition-all hover:ring-yellow-500 cursor-pointer">
+                  <AvatarImage src={userImage} alt={userName} />
+                  <AvatarFallback className="bg-gradient-to-br from-yellow-400 to-yellow-600 text-black">
+                    {userName.substring(0, 2).toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+              </div>
+            ) : (
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="border-white/20 bg-white/5 hover:bg-white/10 transition-all duration-300"
+                >
+                  <Github className="mr-2 h-4 w-4" />
+                  GitHub
+                </Button>
+                <Button
+                  size="sm"
+                  className="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-black font-medium transition-all duration-300"
+                >
+                  Sign In
+                </Button>
+              </div>
+            )}
+          </div> */
+}
