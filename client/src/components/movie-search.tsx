@@ -1,12 +1,10 @@
-"use client"
-
-import { useState } from "react"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Search, Ticket, Film, Calendar, Star } from "lucide-react"
+import { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Search, Ticket, Film, Calendar, Star } from "lucide-react";
 
 export default function MovieSearch() {
-  const [searchQuery, setSearchQuery] = useState("")
+  const [searchQuery, setSearchQuery] = useState("");
 
   return (
     <section className="relative overflow-hidden rounded-xl bg-gradient-to-br from-[#2B2A3C] to-[#1F1E2C] p-6 md:p-8 lg:p-10 shadow-2xl">
@@ -21,7 +19,9 @@ export default function MovieSearch() {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white">
               Quick<span className="text-yellow-300">Tickets</span>
             </h1>
-            <p className="text-gray-300 text-lg">Find and book movie tickets in seconds</p>
+            <p className="text-gray-300 text-lg">
+              Find and book movie tickets in seconds
+            </p>
           </div>
 
           <div className="relative w-full max-w-md">
@@ -81,7 +81,9 @@ export default function MovieSearch() {
                 <div className="flex items-center justify-between">
                   <div>
                     <h3 className="text-white font-medium">Latest Releases</h3>
-                    <p className="text-gray-300 text-sm">Book now for best seats</p>
+                    <p className="text-gray-300 text-sm">
+                      Book now for best seats
+                    </p>
                   </div>
                   <Button size="sm" className="bg-[#dd2476] hover:bg-[#c01e67]">
                     <Ticket className="mr-2 h-4 w-4" />
@@ -94,7 +96,7 @@ export default function MovieSearch() {
         </div>
       </div>
     </section>
-  )
+  );
 }
 
 // <img
