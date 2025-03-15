@@ -26,10 +26,10 @@ const MovieCard = ({ movie }: { movie: Movie }) => {
 
   return (
     <Link to={`/movie/${id}`}>
-      <div className="bg-white shadow-lg rounded-2xl overflow-hidden w-full max-w-sm transition-transform transform hover:scale-105">
+      <div className="bg-gray-300 shadow-lg rounded-2xl overflow-hidden w-full max-w-sm transition-transform transform hover:scale-105">
         <img src={images[0]} alt={name} className="w-full h-60 object-cover" />
         <div className="p-4">
-          <h2 className="text-xl font-bold mb-2">{name}</h2>
+          <h2 className="text-xl font-bold text-black mb-2">{name}</h2>
           <p className="text-gray-600 mb-2 truncate">{description}</p>
 
           <div className="flex justify-between ">
