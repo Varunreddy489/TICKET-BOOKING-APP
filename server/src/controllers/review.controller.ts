@@ -23,7 +23,8 @@ export const CreateReviewController = async (req: Request, res: Response) => {
     res.status(StatusCodes.CREATED).json(SuccessResponse);
   } catch (error: any) {
     ErrorResponse.error = error;
-    res.status(error.statusCode).json(ErrorResponse);
+    const statusCode = error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR; 
+    res.status(statusCode).json(ErrorResponse);
   }
 };
 

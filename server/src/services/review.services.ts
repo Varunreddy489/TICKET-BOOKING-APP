@@ -24,8 +24,6 @@ export const CreateReview = async (data: Review) => {
       throw new AppError("User not found", StatusCodes.NOT_FOUND);
     }
 
-    console.log("userId:", userExists);
-
     const review = await reviewRepository.create(data);
     return review;
   } catch (error: any) {

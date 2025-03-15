@@ -11,7 +11,7 @@ import { MovieValidator } from "../../validations";
 
 const router = Router();
 
-// * @route /api/v1/movies GET
+// *  /api/v1/movies GET
 router.get("/", GetAllMoviesController);
 
 // *  /api/v1/movies/:id PUT

@@ -11,6 +11,7 @@ const router = Router();
 // *  /api/v1/reviews/:movieId POST
 router.post(
   "/:movieId",
+  protectedRoute,
   ReviewValidator,
   CreateReviewController
 );
