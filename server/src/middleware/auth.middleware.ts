@@ -8,6 +8,7 @@ export const protectedRoute = async (
 ) => {
   if (!req.auth || !req.auth.userId) {
     res.status(401).json({ message: "Unauthorized - you must be logged in" });
+    return;
   }
 
   next();
