@@ -99,7 +99,7 @@ const Reviews = ({
         <Separator className="my-6" />
 
         {safeReviews.length > 0 ? (
-          <div className="space-y-6 grid grid-cols-1 md:grid-cols-2 gap-6 ">
+          <div className="space-y-6 grid grid-cols-1 flex-grow md:grid-cols-2 gap-6 ">
             {safeReviews?.map((review) => (
               <ReviewCard key={review.id} review={review} />
             ))}

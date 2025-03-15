@@ -4,7 +4,8 @@ import Footer from "@/components/Footer";
 
 const Layout = () => {
   return (
-    <div className="min-h-screen flex bg-[#1F1B2B] ">
+    <div className="min-h-screen flex bg-gradient-to-b from-zinc-900 via-zinc-900
+    to-black text-zinc-100  ">
       <main className="flex-grow  ">
         <TopBar />
         <Outlet />

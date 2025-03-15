@@ -39,7 +39,7 @@ export default function MovieDetailsPage() {
         <img
           src={movies?.images?.[0] || "/placeholder.svg"}
           alt={movies?.name || "Movie Poster"}
-          className="object-cover brightness-50"
+          className="object-cover w-full brightness-50"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent" />
         <div className="absolute bottom-0 left-0 text-white  w-full p-6 md:p-10">
