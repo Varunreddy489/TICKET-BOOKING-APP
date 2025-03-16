@@ -30,7 +30,7 @@ export function ReviewCard({ review }: { review: Review }) {
     .toUpperCase();
 
   return (
-    <Card>
+    <Card className="w-full" >
       <CardHeader className="pb-4">
         <div className="flex items-start">
           <Avatar className="h-10 w-10 mr-4">
