@@ -11,7 +11,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
       <div className="border-b">
         <div className="flex h-16 items-center px-4">
           <div className="font-bold text-xl flex items-center">
-            <span className="hidden md:inline-block mr-2">🎬</span> MovieAdmin
+            <span className="hidden md:inline-block mr-2">🎬</span> Quick Tickets
           </div>
           <div className="ml-auto flex items-center space-x-4">
             <Search />

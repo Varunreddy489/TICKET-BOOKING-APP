@@ -8,7 +8,7 @@ export function Sidebar() {
 
   const routes = [
     {
-      to: "/admin/",
+      to: "/admin",
       label: "Dashboard",
       icon: LayoutDashboard,
       active: pathname === "/",
