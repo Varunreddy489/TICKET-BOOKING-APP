@@ -27,22 +27,38 @@ model User {
 
 model Movie {
   id                Int      @id @default(autoincrement())
-  name              String // Default name
+  name              String
   description       String
   rating            Float    @default(0.0)
-  images            String[] // Array of image URLs
-  ticketCost        Float    @default(10) // Default ticket cost
-  timings           String[] // Array of show timings
-  languages         String[] // Array of languages
-  genres            String[] // Array of genres
+  images            String[]
+  ticketCost        Float    @default(10)
+  timings           String[]
+  languages         String[]
+  genres            String[]
   isMovieAvailable  Boolean  @default(true)
-  movieSeatCapacity Int      @default(100) // Default seat capacity
+  movieSeatCapacity Int      @default(100)
   tickets           Ticket[] // Relationship to Ticket model
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
   Review            Review[]
+  Seat              Seat[]
 
   @@index([isMovieAvailable])
+}
+
+model Seat {
+  id         Int     @id @default(autoincrement())
+  seatNumber String
+  isBooked   Boolean
+  movie      Movie   @relation(fields: [movieId], references: [id])
+  movieId    Int
+  ticket     Ticket? @relation(fields: [ticketId], references: [id], onDelete: SetNull)
+  ticketId   Int? // Foreign key to Ticket (nullable if seat is not booked)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([movieId, seatNumber]) // Ensure no duplicate seats for the same movie
 }
 
 model Ticket {
@@ -62,6 +78,7 @@ model Ticket {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  Seat      Seat[]
 }
 
 model Review {
