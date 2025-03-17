@@ -47,38 +47,40 @@ model Movie {
 }
 
 model Seat {
-  id         Int     @id @default(autoincrement())
+  id         Int        @id @default(autoincrement())
   seatNumber String
-  isBooked   Boolean
-  movie      Movie   @relation(fields: [movieId], references: [id])
+  status     SeatStatus @default(AVAILABLE)
+  movie      Movie      @relation(fields: [movieId], references: [id])
   movieId    Int
-  ticket     Ticket? @relation(fields: [ticketId], references: [id], onDelete: SetNull)
+  ticket     Ticket?    @relation(fields: [ticketId], references: [id], onDelete: SetNull)
   ticketId   Int? // Foreign key to Ticket (nullable if seat is not booked)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@unique([movieId, seatNumber]) // Ensure no duplicate seats for the same movie
+  @@index([movieId, status])
 }
 
 model Ticket {
-  id         Int      @id @default(autoincrement())
-  count      Int
-  cost       Float
-  timing     String
-  seatNumber String[]
-  totalCost  Float
-  isExpired  Boolean  @default(false)
+  id        Int     @id @default(autoincrement())
+  count     Int
+  cost      Float
+  timing    String
+  totalCost Float
+  isExpired Boolean @default(false)
 
   movie   Movie @relation(fields: [movieId], references: [id])
   movieId Int
 
   user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String? // Foreign key for the user who booked the ticket
+  Seat   Seat[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Seat      Seat[]
+
+  @@index([userId])
 }
 
 model Review {
@@ -93,4 +95,10 @@ model Review {
   userId String // Foreign key for the user who wrote the review
 
   createdAt DateTime @default(now())
+}
+
+enum SeatStatus {
+  AVAILABLE
+  RESERVED
+  BOOKED
 }
