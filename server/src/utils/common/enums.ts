@@ -12,3 +12,9 @@ export const Genres = {
   SciFi: "Sci-Fi",
   Animation: "Animation",
 };
+
+export const SeatStatus = {
+  AVAILABLE: "AVAILABLE",
+  RESERVED: "RESERVED",
+  BOOKED: "BOOKED",
+};

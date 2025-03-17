@@ -50,7 +50,6 @@ export const BookTicket = async (data: Ticket) => {
         cost,
         totalCost,
         timing,
-        seatNumber,
         movieId: numberMovie,
         userId,
       },

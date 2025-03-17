@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql" // or mysql, sqlite depending on your preference
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -46,19 +46,25 @@ model Movie {
   @@index([isMovieAvailable])
 }
 
+enum SeatStatus {
+  AVAILABLE
+  RESERVED
+  BOOKED
+}
+
 model Seat {
   id         Int        @id @default(autoincrement())
   seatNumber String
-  status     SeatStatus @default(AVAILABLE)
+  status     SeatStatus @default(AVAILABLE) // Ensure this line is present
   movie      Movie      @relation(fields: [movieId], references: [id])
   movieId    Int
   ticket     Ticket?    @relation(fields: [ticketId], references: [id], onDelete: SetNull)
-  ticketId   Int? // Foreign key to Ticket (nullable if seat is not booked)
+  ticketId   Int?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@unique([movieId, seatNumber]) // Ensure no duplicate seats for the same movie
+  @@unique([movieId, seatNumber])
   @@index([movieId, status])
 }
 
@@ -95,10 +101,4 @@ model Review {
   userId String // Foreign key for the user who wrote the review
 
   createdAt DateTime @default(now())
-}
-
-enum SeatStatus {
-  AVAILABLE
-  RESERVED
-  BOOKED
 }

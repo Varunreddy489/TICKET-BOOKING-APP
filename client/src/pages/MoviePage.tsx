@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useMovieStore } from "@/store/useMovieStore";
 
-export default function MovieDetailsPage() {
+export default function MoviePage() {
   const { id } = useParams();
   const movieId = Number(id);
   const { movies, isLoading, error, getMovieById } = useMovieStore();
@@ -21,7 +21,7 @@ export default function MovieDetailsPage() {
   const navigate = useNavigate();
 
   const handleNavigate = () => {
-    navigate("/tickets/" + movieId);
+    navigate("/seats/" + movieId);
   };
 
   if (isLoading) return <Spinner />;
@@ -190,7 +190,7 @@ const getShowType = (time: string) => {
 };
 
 const ShowtimeCard = ({ time, movieId }: { time: string; movieId: number }) => (
-  <Link to={`/tickets/${movieId}`}>
+  <Link to={`/seats/${movieId}`}>
     <div
       className="border border-gray-700 rounded-lg p-4 text-white hover:border-yellow-500 transition-colors cursor-pointer group"
       role="button"
