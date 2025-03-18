@@ -23,6 +23,7 @@ model User {
 
   tickets Ticket[] // Relationship to Ticket model
   reviews Review[] // Relationship to Review model
+  wallet  Wallet[]
 }
 
 model Movie {
@@ -101,4 +102,27 @@ model Review {
   userId String // Foreign key for the user who wrote the review
 
   createdAt DateTime @default(now())
+}
+
+model Wallet {
+  id           String              @id @default(uuid())
+  balance      Float               @default(0.0)
+  transactions WalletTransaction[]
+  userId       String
+  user         User                @relation(fields: [userId], references: [id])
+}
+
+model WalletTransaction {
+  id        String          @id @default(uuid())
+  walletId  String
+  amount    Float
+  type      TransactionType
+  createdAt DateTime        @default(now())
+  wallet    Wallet          @relation(fields: [walletId], references: [id])
+}
+
+enum TransactionType {
+  ADD
+  DEDUCT
+  REFUND
 }
