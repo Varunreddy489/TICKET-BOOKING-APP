@@ -1,10 +1,10 @@
 import { DashboardHeader } from "@/components/Admin/DashboardHeader";
 import { DashboardShell } from "@/components/Admin/DashboardShell";
-import { DashboardStats } from "@/components/Admin/DashboardStats";
-import { OccupancyChart } from "@/components/Admin/OccupancyChart";
-import { PopularMovies } from "@/components/Admin/PopularMovies";
-import RecentReservations from "@/components/Admin/RecentReservations";
-import { RevenueChart } from "@/components/Admin/RevenueChart";
+import { DashboardStats } from "@/components/Admin/Dashboard/DashboardStats";
+import { OccupancyChart } from "@/components/Admin/Dashboard/OccupancyChart";
+import { PopularMovies } from "@/components/Admin/Dashboard/PopularMovies";
+import RecentReservations from "@/components/Admin/Dashboard/RecentReservations";
+import { RevenueChart } from "@/components/Admin/Dashboard/RevenueChart";
 
 const AdminDashBoard = () => {
   return (

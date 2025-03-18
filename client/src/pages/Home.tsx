@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import Spinner from "@/components/Spinner";
+import Spinner from "@/components/ui/Spinner";
 import Carousel from "@/components/Carousel";
 import MovieCard from "@/components/MovieCard";
 import { useMovieStore } from "@/store/useMovieStore";

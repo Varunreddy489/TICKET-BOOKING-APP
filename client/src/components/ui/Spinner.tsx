@@ -1,6 +1,6 @@
 import { Loader } from "lucide-react";
 
-import { Card, CardContent } from "./ui/card";
+import { Card, CardContent } from "./card";
 
 const Spinner = () => {
   return (

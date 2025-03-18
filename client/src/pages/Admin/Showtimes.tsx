@@ -1,7 +1,7 @@
 import { DashboardHeader } from "@/components/Admin/DashboardHeader";
 import { DashboardShell } from "@/components/Admin/DashboardShell";
-import { ShowtimeFilters } from "@/components/Admin/ShowtimeFilters";
-import { ShowtimesTable } from "@/components/Admin/ShowtimesTable";
+import { ShowtimeFilters } from "@/components/Admin/Showtimes/ShowtimeFilters";
+import { ShowtimesTable } from "@/components/Admin/Showtimes/ShowtimesTable";
 
 export default function Showtimes() {
   return (

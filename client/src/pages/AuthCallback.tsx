@@ -2,7 +2,7 @@ import { useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { axiosInstance } from "@/lib/axios";
-import Spinner from "@/components/Spinner";
+import Spinner from "@/components/ui/Spinner";
 
 const AuthCallbackPage = () => {
   const { isLoaded, user } = useUser();

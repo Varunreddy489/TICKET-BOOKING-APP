@@ -4,7 +4,7 @@ import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import { ClerkProvider } from "@clerk/clerk-react";
 import AuthProvider from "./providers/AuthProvider.tsx";
-import { ThemeProvider } from "./components/theme-provider.tsx";
+import { ThemeProvider } from "./components/ui/theme-provider.tsx";
 
 // Import your Publishable Key
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;

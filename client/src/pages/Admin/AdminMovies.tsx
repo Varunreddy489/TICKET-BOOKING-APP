@@ -1,7 +1,7 @@
 import { DashboardHeader } from "@/components/Admin/DashboardHeader";
 import { DashboardShell } from "@/components/Admin/DashboardShell";
-import MovieFilters from "@/components/Admin/MovieFilters";
-import { MoviesTable } from "@/components/Admin/MoviesTable";
+import MovieFilters from "@/components/Admin/Movies/MovieFilters";
+import { MoviesTable } from "@/components/Admin/Movies/MoviesTable";
 
 export default function MoviesPage() {
   return (

@@ -3,7 +3,7 @@ import { Clock, Film, Languages, Users } from "lucide-react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 import Reviews from "./Reviews";
-import Spinner from "@/components/Spinner";
+import Spinner from "@/components/ui/Spinner";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -98,7 +98,13 @@ export default function MoviePage() {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {movies?.timings?.map((time: string, index: number) => (
-                  <ShowtimeCard key={index} movieId={movies.id} time={time} />
+                  <ShowtimeCard
+                    key={index}
+                    movieId={movies.id}
+                    cost={movies?.ticketCost}
+                    time={time}
+                    movieName={movies?.name}
+                  />
                 ))}
               </div>
             </Card>
@@ -189,8 +195,24 @@ const getShowType = (time: string) => {
   return "Evening Show";
 };
 
-const ShowtimeCard = ({ time, movieId }: { time: string; movieId: number }) => (
-  <Link to={`/seats/${movieId}/${encodeURIComponent(time.replace(/:/g, "-"))}`}>
+const ShowtimeCard = ({
+  time,
+  movieId,
+  cost,
+  movieName,
+}: {
+  time: string;
+  movieId: number;
+  cost: number;
+  movieName: string;
+}) => (
+  <Link
+    to={`/seats/${movieId}/${encodeURIComponent(
+      time.replace(/:/g, "-")
+    )}?cost=${encodeURIComponent(cost ?? 0)} &movieName=${encodeURIComponent(
+      movieName ?? ""
+    )} `}
+  >
     <div
       className="border border-gray-700 rounded-lg p-4 text-white hover:border-yellow-500 transition-colors cursor-pointer group"
       role="button"

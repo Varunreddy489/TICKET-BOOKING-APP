@@ -27,7 +27,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { MoreHorizontal, Pencil, Trash, Eye } from "lucide-react";
-import { Switch } from "../ui/switch";
+import { Switch } from "../../ui/switch";
 import { Link } from "react-router-dom";
 
 // Sample data - in a real app, this would come from an API

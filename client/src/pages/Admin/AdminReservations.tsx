@@ -1,7 +1,7 @@
 import { DashboardShell } from "@/components/Admin/DashboardShell";
-import ReservationsTable from "@/components/Admin/ReservationsTable";
+import ReservationsTable from "@/components/Admin/Reservations/ReservationsTable";
 import { DashboardHeader } from "@/components/Admin/DashboardHeader";
-import ReservationFilters from "@/components/Admin/ReservationFilters";
+import ReservationFilters from "@/components/Admin/Reservations/ReservationFilters";
 
 const AdminReservations = () => {
   return (
