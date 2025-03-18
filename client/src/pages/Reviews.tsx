@@ -10,7 +10,7 @@ import {
   DialogContent,
   DialogDescription,
 } from "@/components/ui/dialog";
-import Spinner from "@/components/Spinner";
+import Spinner from "@/components/ui/Spinner";
 import { Button } from "@/components/ui/button";
 import { ReviewForm } from "@/components/ReviewForm";
 import { ReviewCard } from "@/components/ReviewCard";
