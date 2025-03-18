@@ -23,7 +23,7 @@ model User {
 
   tickets Ticket[] // Relationship to Ticket model
   reviews Review[] // Relationship to Review model
-  wallet  Wallet[]
+  wallet  Wallet[] // Relationship to User model
 }
 
 model Movie {
@@ -108,7 +108,7 @@ model Wallet {
   id           String              @id @default(uuid())
   balance      Float               @default(0.0)
   transactions WalletTransaction[]
-  userId       String
+  userId       String              @unique
   user         User                @relation(fields: [userId], references: [id])
 
   createdAt DateTime @default(now())
@@ -117,7 +117,7 @@ model Wallet {
 
 model WalletTransaction {
   id        String          @id @default(uuid())
-  walletId  String
+  walletId  String          
   amount    Float
   type      TransactionType
   createdAt DateTime        @default(now())
