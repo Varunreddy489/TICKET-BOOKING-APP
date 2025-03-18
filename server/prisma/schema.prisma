@@ -38,12 +38,12 @@ model Movie {
   genres            String[]
   isMovieAvailable  Boolean             @default(true)
   movieSeatCapacity Int                 @default(100)
-  tickets           Ticket[] // Relationship to Ticket model
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
-  Review            Review[]
-  Seat              Seat[]
-  WalletTransaction WalletTransaction[]
+  Review            Review[] // Relationship to Review model
+  Seat              Seat[] // Relationship to Seat model
+  tickets           Ticket[] // Relationship to Ticket model
+  WalletTransaction WalletTransaction[] // Relationship to WalletTransaction model
 
   @@index([isMovieAvailable])
 }
