@@ -1,14 +1,22 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { SignedOut, UserButton, useUser } from "@clerk/clerk-react";
+import { SignedOut, UserButton } from "@clerk/clerk-react";
 import { Ticket, LayoutDashboard, Menu, X, Search } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import SignInOAuthButtons from "./SignInOAuthButtons";
 
 export default function TopBar() {
-  const { user } = useUser();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
@@ -43,32 +51,66 @@ export default function TopBar() {
           </div>
 
           {/* Center Section - Navigation (Desktop) */}
-          <nav className="flex items-center gap-6">
-            <Link
-              to="/tickets"
-              className="relative px-4 py-2 text-white font-medium transition-all duration-300 hover:text-yellow-400 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-yellow-400 after:transition-all hover:after:w-full"
-            >
-              Booked Tickets
-            </Link>
-            <Link to="/admin">
-              <Button
-                variant="outline"
-                className="border-yellow-500/50 bg-transparent text-white hover:bg-yellow-500/10 hover:text-yellow-400 transition-all duration-300"
-              >
-                <LayoutDashboard className="mr-2 h-4 w-4" />
-                Admin Dashboard
-              </Button>
-            </Link>
-          </nav>
+          {/* <nav className="flex items-center gap-6">
+           
+            
+          </nav> */}
 
-          <div className="flex items-center   gap-4">
-            <h2 className="text-xl font-medium text-white  ">
-              Welcome, {user?.firstName} {user?.lastName}!
-            </h2>
-            <SignedOut>
-              <SignInOAuthButtons />
-            </SignedOut>
-            <UserButton />
+          <div className="flex items-center align-middle   gap-4">
+            <div>
+              <Link to="/admin">
+                <Button
+                  variant="outline"
+                  className="border-yellow-500/50 bg-transparent text-white hover:bg-yellow-500/10 hover:text-yellow-400 transition-all duration-300"
+                >
+                  <LayoutDashboard className="mr-2 h-4 w-4" />
+                  Admin Dashboard
+                </Button>
+              </Link>
+            </div>
+            <div>
+              <SignedOut>
+                <SignInOAuthButtons />
+              </SignedOut>
+              <UserButton />
+            </div>
+            <div>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline">Open</Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56">
+                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem asChild >
+                      <Link
+                        to="/profile"
+                        className="relative px-4 py-2 text-white font-medium transition-all duration-300 hover:text-yellow-400 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-yellow-400 after:transition-all hover:after:w-full"
+                      >
+                        Profile
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild >
+                      <Link
+                        to="/wallet"
+                        className="relative px-4 py-2 text-white font-medium transition-all duration-300 hover:text-yellow-400 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-yellow-400 after:transition-all hover:after:w-full"
+                      >
+                        Wallet
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild > 
+                      <Link
+                        to="/tickets"
+                        className="relative px-4 py-2 text-white font-medium transition-all duration-300 hover:text-yellow-400 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-yellow-400 after:transition-all hover:after:w-full"
+                      >
+                        Booked Tickets
+                      </Link>
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
@@ -113,40 +155,4 @@ export default function TopBar() {
       </div>
     </header>
   );
-}
-
-{
-  /* Right Section - Authentication */
-}
-{
-  /* <div className="hidden md:flex items-center gap-3">
-            {isSignedIn ? (
-              <div className="flex items-center gap-3">
-                <span className="text-white/80 text-sm">Hello, {userName}</span>
-                <Avatar className="h-9 w-9 ring-2 ring-yellow-500/50 transition-all hover:ring-yellow-500 cursor-pointer">
-                  <AvatarImage src={userImage} alt={userName} />
-                  <AvatarFallback className="bg-gradient-to-br from-yellow-400 to-yellow-600 text-black">
-                    {userName.substring(0, 2).toUpperCase()}
-                  </AvatarFallback>
-                </Avatar>
-              </div>
-            ) : (
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="border-white/20 bg-white/5 hover:bg-white/10 transition-all duration-300"
-                >
-                  <Github className="mr-2 h-4 w-4" />
-                  GitHub
-                </Button>
-                <Button
-                  size="sm"
-                  className="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-black font-medium transition-all duration-300"
-                >
-                  Sign In
-                </Button>
-              </div>
-            )}
-          </div> */
 }

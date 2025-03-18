@@ -2,7 +2,10 @@ import { Route, Routes } from "react-router-dom";
 import { AuthenticateWithRedirectCallback } from "@clerk/clerk-react";
 
 import Home from "./pages/Home";
+import Wallet from "./pages/Wallet";
 import Layout from "./layout/Layout";
+import Profile from "./pages/Profile";
+import Tickets from "./pages/Tickets";
 import MoviePage from "./pages/MoviePage";
 import MovieSeats from "./pages/MovieSeats";
 import Reports from "./pages/Admin/Reports";
@@ -28,8 +31,11 @@ const App = () => {
         // * Layout Routes
         <Route element={<Layout />}>
           <Route path="/home" element={<Home />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/wallet" element={<Wallet />} />
+          <Route path="/tickets" element={<Tickets />} />
           <Route path="/movie/:id" element={<MoviePage />} />
-          <Route path="/seats/:movieId" element={<MovieSeats />} />
+          <Route path="/seats/:movieId/:time" element={<MovieSeats />} />
         </Route>
         // ^ Admin Routes
         <Route path="/admin" element={<AdminDashBoard />} />
@@ -43,7 +49,6 @@ const App = () => {
 };
 
 export default App;
-
 
 /*
 hey for my movie booking application i want to implement a feature where if two users are trying to book a same seat at the same time then the second user should be notified that the seat is already booked and he should be redirected to the previous page.how do i implement that feature
