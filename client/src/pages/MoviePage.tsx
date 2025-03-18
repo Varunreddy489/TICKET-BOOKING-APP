@@ -190,7 +190,7 @@ const getShowType = (time: string) => {
 };
 
 const ShowtimeCard = ({ time, movieId }: { time: string; movieId: number }) => (
-  <Link to={`/seats/${movieId}`}>
+  <Link to={`/seats/${movieId}/${encodeURIComponent(time.replace(/:/g, "-"))}`}>
     <div
       className="border border-gray-700 rounded-lg p-4 text-white hover:border-yellow-500 transition-colors cursor-pointer group"
       role="button"
