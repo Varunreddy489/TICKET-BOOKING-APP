@@ -1,5 +1,5 @@
 import { DashboardHeader } from "@/components/Admin/DashboardHeader";
-import { DashboardShell } from "@/components/Admin/DashboardShell";
+import { AdminDashboardLayout } from "@/layout/AdminDashboardLayout";
 import { DashboardStats } from "@/components/Admin/Dashboard/DashboardStats";
 import { OccupancyChart } from "@/components/Admin/Dashboard/OccupancyChart";
 import { PopularMovies } from "@/components/Admin/Dashboard/PopularMovies";
@@ -8,7 +8,7 @@ import { RevenueChart } from "@/components/Admin/Dashboard/RevenueChart";
 
 const AdminDashBoard = () => {
   return (
-    <DashboardShell>
+    <AdminDashboardLayout>
       <DashboardHeader
         heading="Dashboard"
         text="Overview of your movie booking system"
@@ -28,7 +28,7 @@ const AdminDashBoard = () => {
         <RecentReservations />
         <PopularMovies />
       </div>
-    </DashboardShell>
+    </AdminDashboardLayout>
   );
 };
 

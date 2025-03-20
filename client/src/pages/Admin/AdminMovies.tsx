@@ -1,11 +1,11 @@
 import { DashboardHeader } from "@/components/Admin/DashboardHeader";
-import { DashboardShell } from "@/components/Admin/DashboardShell";
+import { AdminDashboardLayout } from "@/layout/AdminDashboardLayout";
 import MovieFilters from "@/components/Admin/Movies/MovieFilters";
 import { MoviesTable } from "@/components/Admin/Movies/MoviesTable";
 
 export default function MoviesPage() {
   return (
-    <DashboardShell>
+    <AdminDashboardLayout>
       <DashboardHeader
         heading="Movies"
         text="Manage your movie catalog"
@@ -16,6 +16,6 @@ export default function MoviesPage() {
       />
       <MovieFilters />
       <MoviesTable />
-    </DashboardShell>
+    </AdminDashboardLayout>
   );
 }

@@ -1,11 +1,12 @@
-import { Search } from "./Search";
-import { Sidebar } from "./Sidebar";
+import { Search } from "../components/Admin/Search";
+import { Sidebar } from "../components/Admin/Sidebar";
 
-interface DashboardShellProps {
+interface AdminDashboardLayoutProps {
   children: React.ReactNode;
 }
 
-export function DashboardShell({ children }: DashboardShellProps) {
+
+export function AdminDashboardLayout({ children }: AdminDashboardLayoutProps) {
   return (
     <div className="flex min-h-screen flex-col">
       <div className="border-b">
