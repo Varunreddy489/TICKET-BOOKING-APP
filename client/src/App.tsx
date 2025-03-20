@@ -2,10 +2,10 @@ import { Route, Routes } from "react-router-dom";
 import { AuthenticateWithRedirectCallback } from "@clerk/clerk-react";
 
 import Home from "./pages/Home";
-import Wallet from "./pages/Wallet";
 import Layout from "./layout/Layout";
-import Profile from "./pages/Profile";
 import Tickets from "./pages/Tickets";
+import Wallet from "./pages/User/UserWallet";
+import User from "./pages/User/User";
 import MoviePage from "./pages/MoviePage";
 import MovieSeats from "./pages/MovieSeats";
 import Reports from "./pages/Admin/Reports";
@@ -13,6 +13,7 @@ import LandingPage from "./pages/LandingPage";
 import AuthCallback from "./pages/AuthCallback";
 import Showtimes from "./pages/Admin/Showtimes";
 import AdminMovies from "./pages/Admin/AdminMovies";
+import PaymentSuccess from "./components/PaymentSuccess";
 import AdminDashBoard from "./pages/Admin/AdminDashBoard";
 import AdminReservations from "./pages/Admin/AdminReservations";
 
@@ -31,10 +32,11 @@ const App = () => {
         // * Layout Routes
         <Route element={<Layout />}>
           <Route path="/home" element={<Home />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/:id" element={<User />} />
           <Route path="/wallet" element={<Wallet />} />
           <Route path="/tickets" element={<Tickets />} />
           <Route path="/movie/:id" element={<MoviePage />} />
+          <Route path="/success" element={<PaymentSuccess />} />
           <Route path="/seats/:movieId/:time" element={<MovieSeats />} />
         </Route>
         // ^ Admin Routes

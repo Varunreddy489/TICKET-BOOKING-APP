@@ -17,6 +17,9 @@ import { Button } from "@/components/ui/button";
 import SignInOAuthButtons from "./SignInOAuthButtons";
 
 export default function TopBar() {
+  const storedUser = localStorage.getItem("userData");
+  const userId = storedUser ? JSON.parse(storedUser) : null;
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
@@ -83,15 +86,15 @@ export default function TopBar() {
                   <DropdownMenuLabel>My Account</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
-                    <DropdownMenuItem asChild >
+                    <DropdownMenuItem asChild>
                       <Link
-                        to="/profile"
+                        to={`/profile/${userId}`}
                         className="relative px-4 py-2 text-white font-medium transition-all duration-300 hover:text-yellow-400 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-yellow-400 after:transition-all hover:after:w-full"
                       >
                         Profile
                       </Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem asChild >
+                    <DropdownMenuItem asChild>
                       <Link
                         to="/wallet"
                         className="relative px-4 py-2 text-white font-medium transition-all duration-300 hover:text-yellow-400 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-yellow-400 after:transition-all hover:after:w-full"
@@ -99,7 +102,7 @@ export default function TopBar() {
                         Wallet
                       </Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem asChild > 
+                    <DropdownMenuItem asChild>
                       <Link
                         to="/tickets"
                         className="relative px-4 py-2 text-white font-medium transition-all duration-300 hover:text-yellow-400 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-yellow-400 after:transition-all hover:after:w-full"
