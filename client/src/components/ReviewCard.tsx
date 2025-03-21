@@ -1,26 +1,25 @@
 import { Star } from "lucide-react";
 import { useUser } from "@clerk/clerk-react";
 
+
 import { Review } from "@/types/types";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export function ReviewCard({ review }: { review: Review }) {
-  
   const formattedDate = review.createdAt
-  ? new Intl.DateTimeFormat("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    }).format(new Date(review.createdAt))
-  : "Unknown date"; // Fallback text for invalid dates
-
+    ? new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }).format(new Date(review.createdAt))
+    : "Unknown date"; // Fallback text for invalid dates
 
   const { user } = useUser();
-  const userName = user?.firstName && user?.lastName 
-    ? `${user.firstName} ${user.lastName}`
-    : "Guest";
-  
+  const userName =
+    user?.firstName && user?.lastName
+      ? `${user.firstName} ${user.lastName}`
+      : "Guest";
 
   // Get initials for avatar fallback
   const initials = userName
@@ -30,7 +29,7 @@ export function ReviewCard({ review }: { review: Review }) {
     .toUpperCase();
 
   return (
-    <Card className="w-full" >
+    <Card className="w-full">
       <CardHeader className="pb-4">
         <div className="flex items-start">
           <Avatar className="h-10 w-10 mr-4">
