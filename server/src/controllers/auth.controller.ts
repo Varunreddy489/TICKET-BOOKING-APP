@@ -4,6 +4,7 @@ import { StatusCodes } from "http-status-codes";
 import { prisma } from "../config";
 import { ErrorResponse, SuccessResponse } from "../utils/common";
 
+
 export const authCallback = async (req: Request, res: Response) => {
   try {
     const { id, name, email } = req.body;
@@ -32,3 +33,5 @@ export const authCallback = async (req: Request, res: Response) => {
     return;
   }
 };
+
+
