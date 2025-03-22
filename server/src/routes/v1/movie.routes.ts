@@ -18,15 +18,12 @@ router.get("/", GetAllMoviesController);
 router.put("/:id", UpdateMovieController);
 
 // *  /api/v1/movies/:id GET
-
 router.get("/:id", GetMovieByIdController);
 
 // *  /api/v1/movies/:id DELETE
-
 router.delete("/:id", DeleteMovieController);
 
-// *  /api/v1/movies POST
-
+// *  /api/v1/movies POSTw
 router.post("/", MovieValidator, CreateMovieController);
 
 export { router as movieRoutes };

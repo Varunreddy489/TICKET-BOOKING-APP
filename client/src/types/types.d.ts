@@ -19,21 +19,20 @@ export type User = {
   email: string;
   clerkId: string;
   role: string;
-  genres: Genres[];
 };
 
 export type Movie = {
-  id: number;
-  name: string;
-  description: string;
-  rating: number;
-  images: string[];
-  ticketCost: number;
-  timings: string[];
-  languages: string[];
-  genres: Genres[];
-  isMovieAvailable: boolean;
-  movieSeatCapacity: number;
+  id?: number;
+  name?: string;
+  description?: string;
+  rating?: number;
+  images?: string[];
+  ticketCost?: number;
+  timings?: string[];
+  languages?: string[];
+  genres?: Genres[];
+  isMovieAvailable?: boolean;
+  movieSeatCapacity?: number;
   createdAt?: Date;
   updatedAt?: Date;
   reviews?: Review[];
@@ -46,11 +45,14 @@ export type Ticket = {
   totalCost?: number;
   userId?: string;
   timing: string;
+  theater?: string;
   seatNumber: string[];
   movieId: number;
   isExpired?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
+  Seat?: { seatNumber: string }[];
+  movie?: { image: string; name: string };
 };
 
 export type Review = {
@@ -59,5 +61,22 @@ export type Review = {
   rating: number;
   movieId?: number;
   userId?: string;
+  createdAt?: Date;
+};
+
+export type Wallet = {
+  id: string;
+  balance: number;
+  movieId: number;
+  userId?: string | null;
+  ticketId?: number | null;
+};
+
+export type WalletTransaction = {
+  id: number;
+  walletId: string;
+  amount: number;
+  movieId?: number;
+  type: string;
   createdAt?: Date;
 };

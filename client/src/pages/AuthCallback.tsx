@@ -3,13 +3,17 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { axiosInstance } from "@/lib/axios";
 import Spinner from "@/components/ui/Spinner";
+import { User } from "@/types/types";
 
 const AuthCallbackPage = () => {
   const { isLoaded, user } = useUser();
   const navigate = useNavigate();
   const syncAttempted = useRef(false);
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState<User | null>(null);
 
+  const userId = userData?.id;
+
+  localStorage.setItem("userId", JSON.stringify(userId));
   localStorage.setItem("userData", JSON.stringify(userData));
 
   useEffect(() => {

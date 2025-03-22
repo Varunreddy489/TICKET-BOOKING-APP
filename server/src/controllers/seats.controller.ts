@@ -6,7 +6,7 @@ import { ErrorResponse, SuccessResponse } from "../utils/common";
 
 export const getAllSeatsController = async (req: Request, res: Response) => {
   try {
-    const movieId = Number(req.params.movieId); 
+    const movieId = Number(req.params.movieId);
 
     if (isNaN(movieId)) {
       res.status(StatusCodes.BAD_REQUEST).json({ error: "Invalid movieId" });

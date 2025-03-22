@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button";
 import SignInOAuthButtons from "./SignInOAuthButtons";
 
 export default function TopBar() {
-  const storedUser = localStorage.getItem("userData");
+  const storedUser = localStorage.getItem("userId");
   const userId = storedUser ? JSON.parse(storedUser) : null;
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
