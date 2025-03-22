@@ -56,3 +56,37 @@ declare global {
     }
   }
 }
+
+export type Seat = {
+  id: number;
+  seatNumber: string;
+  status: string;
+  movieId: number;
+  ticketId?: number | null;
+};
+
+export type Wallet = {
+  id: string;
+  balance: number;
+  movieId: number;
+  userId?: string | null;
+  ticketId?: number | null;
+};
+
+export type WalletTransaction = {
+  id: number;
+  walletId: string;
+  amount: number;
+  movieId?: number;
+  type: string;
+};
+
+export type RefundTicketType = {
+  ticketId: number;
+  userId: string;
+};
+
+export interface AddMoneyData {
+  userId: string;
+  amount: number;
+}
