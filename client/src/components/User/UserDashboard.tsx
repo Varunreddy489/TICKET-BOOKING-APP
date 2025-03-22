@@ -7,8 +7,10 @@ import UserReviews from "@/pages/User/UserReviews";
 import TicketHistory from "@/pages/User/TicketHistory";
 import MovieRecommendations from "@/pages/User/MovieRecomendations";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useUser } from "@clerk/clerk-react";
 
 const UserDashboard = () => {
+  const {user}=useUser()
   const [activeTab, setActiveTab] = useState("overview");
 
   return (
@@ -19,7 +21,7 @@ const UserDashboard = () => {
           <div className="relative h-8 w-8 overflow-hidden rounded-full bg-primary/10">
             <User className="h-5 w-5 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-primary" />
           </div>
-           <span className="font-medium">John Doe</span>
+           <span className="font-medium">{user?.firstName} {user?.lastName}</span>
         </div>
       </div>
 
@@ -75,16 +77,16 @@ const UserDashboard = () => {
         <TabsContent value="overview" className="space-y-6 pt-4">
           <Profile />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <TicketHistory limit={2} />
-            <Wallet />
+            <TicketHistory limit={4} />
+            <Wallet limit={10} />
           </div>
           <MovieRecommendations />
         </TabsContent>
         <TabsContent value="tickets" className="pt-4">
-          <TicketHistory />
+          <TicketHistory limit={99} />
         </TabsContent>
         <TabsContent value="wallet" className="pt-4">
-          <Wallet />
+          <Wallet fullWidth limit={999} />
         </TabsContent>
         <TabsContent value="reviews" className="pt-4">
           <UserReviews />

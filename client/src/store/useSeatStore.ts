@@ -8,6 +8,7 @@ interface SeatStore {
 
   getSeats: (movieId: number) => Promise<void>;
 }
+
 const useSeatStore = create<SeatStore>((set) => ({
   seats: null,
   isLoading: true,
@@ -19,7 +20,11 @@ const useSeatStore = create<SeatStore>((set) => ({
       const response = await axiosInstance.get(`/seats/${movieId}`);
       set({ seats: response.data.data, isLoading: false, error: null });
     } catch (error: any) {
-      set({ error: error });
+      set({
+        error:
+          error.response?.data?.message || error.message || "An error occurred",
+        isLoading: false,
+      });
     }
   },
 }));

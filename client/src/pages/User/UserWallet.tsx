@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   RefreshCcw,
   CreditCard,
@@ -24,67 +24,72 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import Spinner from "@/components/ui/Spinner";
 import { Button } from "@/components/ui/button";
+import { useWalletStore } from "@/store/useWalletStore";
 
-interface WalletTransactionsProps {
+interface WalletProps {
   limit?: number;
+  fullWidth?: boolean;
 }
 
-const walletBalance = 125.5;
+const Wallet = ({ limit, fullWidth }: WalletProps) => {
+  const storedUser = localStorage.getItem("userId");
 
-const transactions = [
-  {
-    id: 1,
-    amount: 48.0,
-    type: "PAY",
-    description: "Deadpool & Wolverine",
-    date: "March 8, 2025",
-    time: "2:15 PM",
-  },
-  {
-    id: 2,
-    amount: 100.0,
-    type: "ADD",
-    description: "Wallet Top-up",
-    date: "March 5, 2025",
-    time: "10:30 AM",
-  },
-  {
-    id: 3,
-    amount: 32.0,
-    type: "PAY",
-    description: "Dune: Part Two",
-    date: "March 1, 2025",
-    time: "4:45 PM",
-  },
-  {
-    id: 4,
-    amount: 16.0,
-    type: "REFUND",
-    description: "Refund - Cancelled Booking",
-    date: "February 25, 2025",
-    time: "11:20 AM",
-  },
-  {
-    id: 5,
-    amount: 50.0,
-    type: "ADD",
-    description: "Wallet Top-up",
-    date: "February 20, 2025",
-    time: "9:15 AM",
-  },
-];
+  const userId = storedUser ? JSON.parse(storedUser) : null;
+  const [amount, setAmount] = useState(0);
 
-const Wallet = ({ limit }: WalletTransactionsProps) => {
-  const displayedTransactions = limit
-    ? transactions.slice(0, limit)
-    : transactions;
+  const {
+    addMoney,
+    getTransactions,
+    walletData,
+    getWallet,
+    isLoading,
+    transactions,
+    error,
+  } = useWalletStore();
+
+  const handleAddMoney = async () => {
+    if (!userId) {
+      console.error("User ID is missing");
+      return;
+    }
+    console.log("Amount to add:", amount); // Debug the amount
+    try {
+      const response = await addMoney(userId, amount);
+
+      console.log("Add money response:", response);
+    } catch (error: any) {
+      console.error("Failed to add money:", error);
+    }
+  };
+
+  if (error) {
+    return <div className="text-red-500">{error}</div>;
+  }
+
+  if (isLoading) {
+    <Spinner />;
+  }
+
+  useEffect(() => {
+    getWallet(userId);
+    getTransactions(userId);
+  }, [userId]);
+
+  if (!transactions) {
+    console.log("No transactions found");
+  }
+
+  // const displayedTransactions = limit
+  //   ? transactions.slice(0, limit)
+  //   : transactions;
 
   const getTransactionIcon = (type: string) => {
     switch (type) {
       case "ADD":
         return <ArrowUpCircle className="h-5 w-5 text-green-500" />;
-      case "PAY":
+      case "DEDUCT":
         return <ArrowDownCircle className="h-5 w-5 text-red-500" />;
       case "REFUND":
         return <RefreshCcw className="h-5 w-5 text-blue-500" />;
@@ -119,14 +124,8 @@ const Wallet = ({ limit }: WalletTransactionsProps) => {
     }
   };
 
-  const [amount, setAmount] = useState(0);
-
-  const handleAddMoney = () => {
-    console.log(amount);
-  };
-
   return (
-    <Card className="h-full">
+    <Card className="h-full  ">
       <CardHeader>
         <div className="flex items-center justify-between">
           <div>
@@ -135,18 +134,13 @@ const Wallet = ({ limit }: WalletTransactionsProps) => {
               Manage your wallet and view transaction history
             </CardDescription>
           </div>
-          {limit && transactions.length > limit && (
-            <Button variant="ghost" size="sm">
-              View All
-            </Button>
-          )}
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex items-center justify-between p-4 rounded-lg border bg-card">
           <div>
             <p className="text-sm text-muted-foreground">Current Balance</p>
-            <p className="text-2xl font-bold">${walletBalance.toFixed(2)}</p>
+            <p className="text-2xl font-bold">${walletData?.balance}</p>
           </div>
           <Dialog>
             <DialogTrigger asChild>
@@ -180,9 +174,8 @@ const Wallet = ({ limit }: WalletTransactionsProps) => {
             </DialogContent>
           </Dialog>
         </div>
-
-        <div className="space-y-3">
-          {displayedTransactions.map((transaction) => (
+        <div className={` grid ${fullWidth ? "grid-cols-2" : ""} space-y-3  space-x-3 `}>
+          {transactions?.slice(0, limit).map((transaction: any) => (
             <div
               key={transaction.id}
               className="flex items-center justify-between p-3 rounded-lg border"
@@ -190,9 +183,13 @@ const Wallet = ({ limit }: WalletTransactionsProps) => {
               <div className="flex items-center gap-3">
                 {getTransactionIcon(transaction.type)}
                 <div>
-                  <p className="font-medium">{transaction.description}</p>
+                  <p className="font-medium">{transaction.type}</p>
                   <p className="text-xs text-muted-foreground">
-                    {transaction.date} • {transaction.time}
+                    {/*  //* { data} • {time} */}
+
+                    {transaction.createdAt
+                      ? new Date(transaction.createdAt).toLocaleString()
+                      : "Unknown date"}
                   </p>
                 </div>
               </div>
@@ -204,14 +201,13 @@ const Wallet = ({ limit }: WalletTransactionsProps) => {
           ))}
         </div>
       </CardContent>
-      {!limit && (
-        <CardFooter>
-          <div className="text-sm text-muted-foreground">
-            Showing {displayedTransactions.length} of {transactions.length}{" "}
-            transactions
-          </div>
-        </CardFooter>
-      )}
+      <CardFooter>
+        {/* <div className="text-sm text-muted-foreground">
+          {(transactions?.length ?? 0) > 10
+            ? `Showing 10 of ${transactions?.length} transactions`
+            : "For More Visit  wallets tab "}
+        </div> */}
+      </CardFooter>
     </Card>
   );
 };

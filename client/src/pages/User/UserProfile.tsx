@@ -1,20 +1,14 @@
+// import { useParams } from "react-router-dom";
 import { Edit, Mail, User } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useParams } from "react-router-dom";
 const UserProfile = () => {
-  const id = useParams();
+  // const {id }= useParams();
 
-  console.log(id);
+  const userData = localStorage.getItem("userData");
 
-  const user = {
-    name: "John Doe",
-    email: "john.doe@example.com",
-    role: "Premium Member",
-    memberSince: "Jan 2023",
-    totalBookings: 24,
-  };
+  const user = userData ? JSON.parse(userData) : null;
 
   return (
     <Card>
@@ -41,7 +35,10 @@ const UserProfile = () => {
                 {user.role}
               </div>
               <div className="rounded-full bg-muted px-3 py-1 text-sm">
-                Member since {user.memberSince}
+                Member since{" "}
+                {user.createdAt
+                  ? new Date(user.createdAt).toLocaleString()
+                  : "Unknown date"}
               </div>
               <div className="rounded-full bg-muted px-3 py-1 text-sm">
                 {user.totalBookings} Bookings

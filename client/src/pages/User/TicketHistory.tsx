@@ -1,4 +1,4 @@
-import { Calendar, MapPin, Ticket } from "lucide-react";
+import { useEffect } from "react";
 
 import {
   Card,
@@ -8,57 +8,32 @@ import {
   CardContent,
   CardDescription,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import Spinner from "@/components/ui/Spinner";
+
 import { Button } from "@/components/ui/button";
+import { useUserStore } from "@/store/useUserStore";
+import TicketCard from "./TicketCard";
 
-const tickets = [
-  {
-    id: 1,
-    movieName: "Dune: Part Two",
-    timing: "March 15, 2025 - 7:30 PM",
-    seats: "G12, G13",
-    totalCost: "$32.00",
-    status: "upcoming",
-    theater: "AMC Lincoln Square",
-    image: "/placeholder.svg?height=120&width=90",
-  },
-  {
-    id: 2,
-    movieName: "Deadpool & Wolverine",
-    timing: "March 10, 2025 - 9:00 PM",
-    seats: "F5, F6, F7",
-    totalCost: "$48.00",
-    status: "upcoming",
-    theater: "Regal Cinemas",
-    image: "/placeholder.svg?height=120&width=90",
-  },
-  {
-    id: 3,
-    movieName: "Oppenheimer",
-    timing: "February 28, 2025 - 6:15 PM",
-    seats: "D10",
-    totalCost: "$16.00",
-    status: "expired",
-    theater: "Cinemark",
-    image: "/placeholder.svg?height=120&width=90",
-  },
-  {
-    id: 4,
-    movieName: "Barbie",
-    timing: "February 20, 2025 - 5:45 PM",
-    seats: "H8, H9",
-    totalCost: "$32.00",
-    status: "expired",
-    theater: "AMC Empire 25",
-    image: "/placeholder.svg?height=120&width=90",
-  },
-];
+const TicketHistory = ({ limit }: { limit: number }) => {
+  const storedUser = localStorage.getItem("userId");
+  const userId = storedUser ? JSON.parse(storedUser) : null;
 
-interface TicketHistoryProps {
-  limit?: number
-}
-const TicketHistory = ({ limit }: TicketHistoryProps) => {
-  const displayedTickets = limit ? tickets.slice(0, limit) : tickets;
+  const { tickets, getUserTickets, isLoading, error } = useUserStore();
+
+  useEffect(() => {
+    getUserTickets(userId);
+  }, [userId]);
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  if (isLoading) {
+    <Spinner />;
+  }
+
+  // console.log(tickets);
+
   return (
     <Card className="h-full">
       <CardHeader>
@@ -69,7 +44,7 @@ const TicketHistory = ({ limit }: TicketHistoryProps) => {
               View your past and upcoming movie tickets
             </CardDescription>
           </div>
-          {limit && tickets.length > limit && (
+          {tickets.length > 4 && (
             <Button variant="ghost" size="sm">
               View All
             </Button>
@@ -77,7 +52,27 @@ const TicketHistory = ({ limit }: TicketHistoryProps) => {
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
-        {displayedTickets.map((ticket) => (
+        {tickets.slice(0, limit).map((ticket: any) => (
+          <TicketCard key={ticket.id} ticket={ticket} />
+        ))}
+      </CardContent>
+      <CardFooter>
+        <div className="text-sm text-muted-foreground">
+          {/*   */}
+          {/* <h1>Showing of 4 of {tickets.length} tickets</h1>
+          <p>For More Visit Ticket History</p> */}
+        </div>
+      </CardFooter>
+    </Card>
+  );
+};
+
+export default TicketHistory;
+
+// new Date(ticket.createdAt).getTime() > new Date().getTime() - 24 * 60 * 60 * 1000
+
+{
+  /* {tickets.slice(0, limit).map((ticket: any) => (
           <div
             key={ticket.id}
             className="flex flex-col sm:flex-row gap-4 p-4 rounded-lg border"
@@ -85,51 +80,48 @@ const TicketHistory = ({ limit }: TicketHistoryProps) => {
             <div className="flex-shrink-0">
               <img
                 src={ticket.image || "/placeholder.svg"}
-                alt={ticket.movieName}
+                alt={ticket.movie.name}
                 className="rounded-md object-cover h-[120px] w-[90px]"
               />
             </div>
             <div className="flex-1 space-y-2">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                <h3 className="font-semibold text-lg">{ticket.movieName}</h3>
-                <Badge
-                  variant={
-                    ticket.status === "upcoming" ? "default" : "secondary"
-                  }
-                >
-                  {ticket.status === "upcoming" ? "Upcoming" : "Expired"}
-                </Badge>
+                <h3 className="font-semibold text-lg">{ticket.movie.name}</h3>
+                <div className="flex gap-4">
+                  <Badge variant={ticket.isExpired ? "default" : "secondary"}>
+                    {ticket.isExpired === false ? "Upcoming" : "Expired"}
+                  </Badge>
+                  {ticket.isExpired}
+
+                  <Button variant="ghost" size="sm">
+                    <Ban />
+                    Cancel
+                  </Button>
+                </div>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <Calendar className="h-4 w-4" />
-                  <span>{ticket.timing}</span>
+                  <span>{new Date(ticket.createdAt).toLocaleString()}</span>
                 </div>
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <MapPin className="h-4 w-4" />
-                  <span>{ticket.theater}</span>
+                  <span>
+                    {ticket.theater === undefined ? "Theater" : ticket.theater}
+                  </span>
                 </div>
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <Ticket className="h-4 w-4" />
-                  <span>Seats: {ticket.seats}</span>
+                  <span>
+                    Seats:{" "}
+                    {ticket.Seat.map((seat: any) => seat.seatNumber).join(", ")}
+                  </span>
                 </div>
                 <div className="flex items-center gap-2 font-medium">
-                  <span>Total: {ticket.totalCost}</span>
+                  <span>Total: {ticket.totalCost} $ </span>
                 </div>
               </div>
             </div>
           </div>
-        ))}
-      </CardContent>
-      {!limit && (
-        <CardFooter>
-          <div className="text-sm text-muted-foreground">
-            Showing {displayedTickets.length} of {tickets.length} tickets
-          </div>
-        </CardFooter>
-      )}
-    </Card>
-  );
-};
-
-export default TicketHistory;
+        ))} */
+}
