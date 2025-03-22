@@ -4,16 +4,17 @@ import { AuthenticateWithRedirectCallback } from "@clerk/clerk-react";
 import Home from "./pages/Home";
 import Layout from "./layout/Layout";
 import Tickets from "./pages/Tickets";
-import Wallet from "./pages/User/UserWallet";
 import User from "./pages/User/User";
 import MoviePage from "./pages/MoviePage";
 import MovieSeats from "./pages/MovieSeats";
 import Reports from "./pages/Admin/Reports";
+import Wallet from "./pages/User/UserWallet";
 import LandingPage from "./pages/LandingPage";
 import AuthCallback from "./pages/AuthCallback";
 import Showtimes from "./pages/Admin/Showtimes";
+import { Toaster } from "./components/ui/sonner";
 import AdminMovies from "./pages/Admin/AdminMovies";
-import PaymentSuccess from "./components/PaymentSuccess";
+// import PaymentSuccess from "./components/PaymentSuccess";
 import AdminDashBoard from "./pages/Admin/AdminDashBoard";
 import AdminReservations from "./pages/Admin/AdminReservations";
 
@@ -36,7 +37,7 @@ const App = () => {
           <Route path="/wallet" element={<Wallet />} />
           <Route path="/tickets" element={<Tickets />} />
           <Route path="/movie/:id" element={<MoviePage />} />
-          <Route path="/success" element={<PaymentSuccess />} />
+          {/* <Route path="/success" element={<PaymentSuccess />} /> */}
           <Route path="/seats/:movieId/:time" element={<MovieSeats />} />
         </Route>
         // ^ Admin Routes
@@ -46,6 +47,7 @@ const App = () => {
         <Route path="/admin/showtimes" element={<Showtimes />} />
         <Route path="/admin/reservations" element={<AdminReservations />} />
       </Routes>
+      <Toaster />
     </div>
   );
 };

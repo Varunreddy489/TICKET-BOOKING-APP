@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { Star } from "lucide-react";
 
 import { Label } from "@/components/ui/label";
@@ -11,16 +11,12 @@ export function ReviewForm({ movieId }: { movieId: number }) {
   const [hoveredRating, setHoveredRating] = useState(0);
   const [content, setContent] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [userId, setUserId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const { createReview } = useReviewStore();
 
-  useEffect(() => {
-    const storedData = localStorage.getItem("userData");
-    const userData = storedData ? JSON.parse(storedData) : null;
-    setUserId(userData?.id || null);
-  }, []);
+  const storedUser = localStorage.getItem("userId");
+  const userId = storedUser ? JSON.parse(storedUser) : null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
