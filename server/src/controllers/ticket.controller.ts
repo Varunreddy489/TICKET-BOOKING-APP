@@ -2,10 +2,15 @@ import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
 import { prisma } from "../config";
+import { RefundTicketType, Ticket } from "../types/types";
 import { ErrorResponse, SuccessResponse } from "../utils/common";
-import { BookTicket, GetTicketById, GetTickets } from "../services";
-import { Ticket } from "../types/types";
-import AppError from "../utils/errors/app.error";
+import {
+  BookTicket,
+  GetTicketById,
+  GetTickets,
+  GetUserTickets,
+  RefundTicket,
+} from "../services";
 
 /**
  
@@ -25,11 +30,10 @@ import AppError from "../utils/errors/app.error";
 
  */
 
-// * /api/v1/tickets POST
+// *  /api/v1/tickets/:movieId POST
 export const BookTicketsController = async (req: Request, res: Response) => {
   try {
     const { movieId } = req.params;
-    // const { userId } = req.auth || {};
     const { count, userId, cost, timing, seatNumber } = req.body;
 
     const ticketData: Ticket = {
@@ -50,8 +54,10 @@ export const BookTicketsController = async (req: Request, res: Response) => {
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ message: error.message });
+    return;
   }
 };
+
 
 // * /api/v1/tickets GET
 export const GetAllTicketsController = async (req: Request, res: Response) => {
@@ -82,3 +88,39 @@ export const GetTicketByIdController = async (req: Request, res: Response) => {
   }
 };
 
+export const GetUserTicketsController = async (req: Request, res: Response) => {
+  try {
+    const response = await GetUserTickets(req.params.userId);
+    SuccessResponse.data = response;
+    res.status(StatusCodes.OK).json(SuccessResponse);
+    return;
+  } catch (error: any) {
+    ErrorResponse.error = error;
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(ErrorResponse);
+    return;
+  }
+};
+
+// *  /api/v1/tickets/user/:userId/ PUT
+
+export const RefundTicketController = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params;
+    const { ticketId } = req.body;
+
+    const data: RefundTicketType = {
+      userId,
+      ticketId,
+    };
+
+    const response = await RefundTicket(data);
+
+    SuccessResponse.data = response;
+    res.status(StatusCodes.OK).json(SuccessResponse);
+    return;
+  } catch (error: any) {
+    ErrorResponse.error = error;
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(ErrorResponse);
+    return;
+  }
+};
